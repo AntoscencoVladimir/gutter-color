@@ -1,4 +1,3 @@
--- @module gutter-color
 local fn = vim.fn
 local nvim_buf_get_lines = vim.api.nvim_buf_get_lines
 local nvim_get_current_buf = vim.api.nvim_get_current_buf
