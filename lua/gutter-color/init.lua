@@ -21,8 +21,8 @@ M.highlight_line = function(line, lineNumber, bufnr)
     end
 end
 
-local function highlight_buffer()
-    local bufnr = vim.api.nvim_get_current_buf() or '%'
+M.setup = function()
+    local bufnr = vim.api.nvim_get_current_buf() or 0
     local lines = nvim_buf_get_lines(bufnr, 0, -1, true)
     for lineNumber, line in ipairs(lines) do
         M.highlight_line(line, lineNumber, bufnr)
@@ -30,7 +30,7 @@ local function highlight_buffer()
 
 	vim.api.nvim_buf_attach(bufnr, false, {
 		on_lines = function()
-            local bufnr = vim.api.nvim_get_current_buf() or '%'
+            local bufnr = vim.api.nvim_get_current_buf() or 0
             local lines = nvim_buf_get_lines(bufnr, 0, -1, true)
             for lineNumber, line in ipairs(lines) do
                 M.highlight_line(line, lineNumber, bufnr)
@@ -41,10 +41,6 @@ local function highlight_buffer()
 	})
 end
 
-local function setup()
-    highlight_buffer()
-end
-
 return {
-    setup = setup
+    setup = M.setup()
 }
