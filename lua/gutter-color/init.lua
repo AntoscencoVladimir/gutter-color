@@ -42,5 +42,5 @@ M.setup = function()
 end
 
 return {
-    setup = M.setup()
+    setup = M.setup
 }
