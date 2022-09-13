@@ -1,4 +1,3 @@
-
 local fn = vim.fn
 local nvim_buf_get_lines = vim.api.nvim_buf_get_lines
 local nvim_get_current_buf = vim.api.nvim_get_current_buf
@@ -23,17 +22,24 @@ M.highlight_line = function(line, lineNumber, bufnr)
     end
 end
 
+M.attach_to_buffer = function()
+    local bufnr = nvim_get_current_buf() or 0
+    local lines = nvim_buf_get_lines(bufnr, 0, -1, true)
+    for lineNumber, line in ipairs(lines) do
+        M.highlight_line(line, lineNumber, bufnr)
+    end
+end
+
 M.setup = function()
-    local bufnr = vim.api.nvim_get_current_buf() or 0
+
+    local bufnr = nvim_get_current_buf() or 0
     local lines = nvim_buf_get_lines(bufnr, 0, -1, true)
     for lineNumber, line in ipairs(lines) do
         M.highlight_line(line, lineNumber, bufnr)
     end
 
-    vim.api.nvim_buf_attach(bufnr, false, {
+    vim.api.nvim_buf_attach(bufnr, true, {
         on_lines = function()
-            local bufnr = vim.api.nvim_get_current_buf() or 0
-            local lines = nvim_buf_get_lines(bufnr, 0, -1, true)
             for lineNumber, line in ipairs(lines) do
                 M.highlight_line(line, lineNumber, bufnr)
             end
